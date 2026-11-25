@@ -1,0 +1,196 @@
+
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b12">
+<title>NOVA — AI-помощник</title>
+<style>
+:root{--bg:#090b12;--panel:#121827;--line:#293246;--txt:#f1f4ff;--muted:#9ba7bd;--blue:#a9bcff;--cyan:#9be4df}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 75% 5%,#202b4938,transparent 40%),var(--bg);color:var(--txt);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{width:min(1100px,calc(100% - 36px));margin:auto}
+a{color:inherit;text-decoration:none}
+.nav{height:74px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{font-weight:800;letter-spacing:.2em;display:flex;gap:10px;align-items:center}
+.logo{display:grid;place-items:center;width:34px;height:34px;border:1px solid #647bb6;border-radius:11px;background:linear-gradient(145deg,#2b3a61,#111827);box-shadow:0 0 25px #718fe733}
+.links{display:flex;gap:25px;color:var(--muted);font-size:14px}
+.links a:hover{color:white}
+.btn{display:inline-block;padding:11px 16px;border-radius:11px;background:#dce6ff;color:#111827;font-weight:750}
+.btn.ghost{background:#ffffff08;color:#dce5fa;border:1px solid var(--line)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:40px;padding:85px 0 75px;min-height:570px}
+.eyebrow,.tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#c2d0f2;border:1px solid var(--line);border-radius:99px;padding:7px 11px;display:inline-block}
+.eyebrow:before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--cyan);margin-right:9px;box-shadow:0 0 10px var(--cyan)}
+h1{font-size:clamp(44px,6vw,72px);line-height:1.03;letter-spacing:-.055em;margin:22px 0}
+.grad{background:linear-gradient(100deg,#e4ebff,#9fb6ff,#91ded9);color:transparent;background-clip:text}
+.lead{color:var(--muted);font-size:18px;max-width:580px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}
+.small{font-size:12px;color:#7e8ba3;margin-top:15px}
+.visual{min-height:360px;display:grid;place-items:center;position:relative}
+.orb{width:280px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 28%,#dce8ff 0,#8ea9ec 8%,#465d9a 25%,#1a2949 52%,#080d18 72%);box-shadow:inset -25px -25px 50px #05070d,inset 12px 12px 30px #d4e2ff55,0 0 85px #718fe733;position:relative;animation:float 7s ease-in-out infinite}
+.orb:before,.orb:after{content:'';position:absolute;inset:-24px;border:1px solid #a9bcff55;border-radius:50%;transform:rotate(-25deg) scaleY(.35)}
+.orb:after{inset:-48px;transform:rotate(32deg) scaleY(.25);border-color:#9be4df44}
+.bubble{position:absolute;background:#151d2ddd;border:1px solid var(--line);padding:12px 15px;border-radius:13px;font-size:12px;color:#b8c4dc;backdrop-filter:blur(12px)}
+.bubble b{display:block;color:white;font-size:14px}
+.b1{left:0;top:18%}
+.b2{right:0;bottom:18%}
+@keyframes float{50%{transform:translateY(-12px)}}
+section{border-top:1px solid var(--line);padding:70px 0}
+.kicker{font-size:11px;letter-spacing:.15em;color:var(--blue);text-transform:uppercase}
+.heading{font-size:clamp(29px,4vw,42px);line-height:1.12;letter-spacing:-.04em;margin:8px 0}
+.desc{color:var(--muted);max-width:680px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:27px}
+.card,.step,.model{background:linear-gradient(145deg,#ffffff0c,#ffffff04);border:1px solid var(--line);border-radius:17px;padding:22px}
+.ico{width:38px;height:38px;display:grid;place-items:center;background:#202b43;border:1px solid var(--line);border-radius:11px;color:#d4e0ff;margin-bottom:14px}
+.card h3,.step h3,.model h3{margin:0 0 7px;font-size:17px}
+.card p,.step p,.model p{margin:0;color:var(--muted);font-size:14px}
+.models,.steps{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:25px}
+.steps{grid-template-columns:repeat(3,1fr)}
+.num{font-size:11px;letter-spacing:.14em;color:var(--blue);margin-bottom:10px}
+.notice{margin-top:17px;padding:20px;border:1px solid #718fe755;border-radius:16px;background:#718fe711}
+.notice p{margin:5px 0 0;color:var(--muted);font-size:14px}
+.faq details{border-bottom:1px solid var(--line);padding:17px 0}
+.faq summary{cursor:pointer;font-weight:650}
+.faq p{color:var(--muted);font-size:14px;max-width:750px}
+.footer{padding:28px 0 40px;border-top:1px solid var(--line);color:#78859b;font-size:12px;display:flex;justify-content:space-between;gap:15px}
+@media(max-width:780px){
+.links{display:none}
+.hero{grid-template-columns:1fr;padding:55px 0 40px;gap:10px}
+.visual{min-height:300px}
+.orb{width:230px}
+.grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+.wrap{width:calc(100% - 28px)}
+.nav{height:65px}
+.nav>.btn{font-size:12px;padding:9px 11px}
+.hero{padding-top:45px}
+h1{font-size:48px}
+.lead{font-size:16px}
+.grid,.steps,.models{grid-template-columns:1fr}
+.visual{min-height:270px}
+.orb{width:205px}
+.bubble{font-size:10px;padding:9px 11px}
+section{padding:53px 0}
+.footer{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<header class="wrap nav">
+<a class="brand" href="#top"><span class="logo">N</span>NOVA</a>
+<nav class="links">
+<a href="#features">Возможности</a>
+<a href="#models">Модели</a>
+<a href="#windows">Windows</a>
+<a href="#faq">Вопросы</a>
+</nav>
+<a class="btn" href="#windows">Windows-версия</a>
+</header>
+
+<main id="top">
+<div class="wrap hero">
+<div>
+<span class="eyebrow">Проект в разработке</span>
+<h1>Не просто чат.<br><span class="grad">Твой AI-помощник.</span></h1>
+<p class="lead">NOVA задумывается как помощник для общения, программирования и работы с файлами на компьютере. Сначала — сайт. Затем — отдельное приложение для Windows.</p>
+<div class="actions">
+<a class="btn" href="#features">Изучить NOVA</a>
+<a class="btn ghost" href="#windows">Как установить</a>
+</div>
+<div class="small">Приложение пока не выпущено — мы не размещаем фиктивную ссылку на скачивание.</div>
+</div>
+<div class="visual">
+<div class="orb"></div>
+<div class="bubble b1"><b>Помощник по коду</b>Идеи → проекты</div>
+<div class="bubble b2"><b>Голосовой режим</b>Общение без клавиатуры</div>
+</div>
+</div>
+
+<section id="features">
+<div class="wrap">
+<div class="kicker">Возможности</div>
+<h2 class="heading">Один помощник для разных задач</h2>
+<p class="desc">Ниже — планируемые функции. Они будут появляться постепенно после разработки и тестирования.</p>
+<div class="grid">
+<article class="card"><div class="ico">⌘</div><h3>Помощь с кодом</h3><p>HTML, CSS, Python, небольшие приложения и поиск ошибок.</p></article>
+<article class="card"><div class="ico">◉</div><h3>Голосовой режим</h3><p>Голосовой ввод и озвучивание ответов.</p></article>
+<article class="card"><div class="ico">▤</div><h3>Работа с файлами</h3><p>В Windows-версии — создание и изменение файлов и папок с подтверждением.</p></article>
+<article class="card"><div class="ico">⌁</div><h3>История диалогов</h3><p>Сохранение переписки и возврат к прошлым задачам.</p></article>
+<article class="card"><div class="ico">◇</div><h3>Выбор модели</h3><p>Переключение между локальными моделями для общения и кода.</p></article>
+<article class="card"><div class="ico">↗</div><h3>GitHub</h3><p>В перспективе — помощь с Git и публикацией проектов после разрешения.</p></article>
+</div>
+</div>
+</section>
+
+<section id="models">
+<div class="wrap">
+<div class="kicker">Локальный ИИ</div>
+<h2 class="heading">Без оплаты за каждый запрос</h2>
+<p class="desc">Предварительный план. Совместимость, точные модели и требования проверим во время разработки.</p>
+<div class="models">
+<article class="model">
+<span class="tag">Для программирования · план</span>
+<h3>Qwen Coder 3B</h3>
+<p>Компактная модель для генерации и объяснения кода. Уступает крупным облачным моделям; скорость зависит от устройства.</p>
+</article>
+<article class="model">
+<span class="tag">Для общения · план</span>
+<h3>Лёгкая Qwen</h3>
+<p>Небольшая модель для повседневных вопросов. Локальный запуск не тарифицирует запросы, но использует память компьютера.</p>
+</article>
+</div>
+</div>
+</section>
+
+<section id="windows">
+<div class="wrap">
+<div class="kicker">Windows-приложение</div>
+<h2 class="heading">Как установить NOVA на ПК</h2>
+<p class="desc">Приложение ещё не создано. Когда установщик будет готов, здесь появятся настоящая ссылка, системные требования и пошаговая инструкция.</p>
+<div class="steps">
+<article class="step"><div class="num">ШАГ 01</div><h3>Скачать установщик</h3><p>Нажать официальную кнопку загрузки Windows-версии на этой странице.</p></article>
+<article class="step"><div class="num">ШАГ 02</div><h3>Установить</h3><p>Открыть скачанный файл и пройти шаги установщика. Добавим скриншоты перед выпуском.</p></article>
+<article class="step"><div class="num">ШАГ 03</div><h3>Запустить NOVA</h3><p>Выбрать модель и папку проекта. Доступ к файлам будет понятным и контролируемым.</p></article>
+</div>
+<div class="notice">
+<strong>ⓘ Сейчас скачать приложение нельзя.</strong>
+<p>На этом этапе готовится только сайт. Windows-приложение будет отдельной следующей задачей. Я не буду выдавать несуществующий EXE за готовую программу.</p>
+</div>
+</div>
+</section>
+
+<section id="faq">
+<div class="wrap">
+<div class="kicker">FAQ</div>
+<h2 class="heading">Частые вопросы</h2>
+<div class="faq">
+<details>
+<summary>NOVA уже может менять файлы на моём ПК?</summary>
+<p>Нет. Это функция будущего Windows-приложения. Сайт не получает доступ к файлам компьютера.</p>
+</details>
+<details>
+<summary>Будет ли NOVA бесплатной?</summary>
+<p>Локальные модели можно запускать без платы за каждый запрос. Нужны совместимое устройство и место для загрузки модели. Облачные сервисы могут иметь отдельную стоимость и лимиты.</p>
+</details>
+<details>
+<summary>Сможет ли она загружать проекты на GitHub?</summary>
+<p>Это можно реализовать в дальнейшем. Для публикации понадобится подключение к GitHub и подтверждение пользователя перед отправкой.</p>
+</details>
+<details>
+<summary>Когда выйдет приложение?</summary>
+<p>Срок пока не установлен: сначала нужно разработать и протестировать программу. На сайте появится дата, когда её можно будет подтвердить.</p>
+</details>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="wrap footer">
+<span>© 2026 NOVA · Концепт проекта</span>
+<span>Сначала сайт. Windows-приложение — следующим этапом.</span>
+</footer>
+</body>
+</html>
